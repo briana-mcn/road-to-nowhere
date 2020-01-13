@@ -1,25 +1,12 @@
-import os
-
 from flask import Flask
 
+from config import config_settings
 from road_to_nowhere import routes
-import config
+from road_to_nowhere.database import db
 
 
-def create_app():
-    app = Flask(__name__)
+app = Flask(__name__)
+app.config.from_object(config_settings)
 
-    run_mode = os.environ.get('RUN_MODE', "dev")
-
-    if  run_mode == 'dev':
-        app.config.from_object(config.ConfigDev)
-
-    elif run_mode == 'prod':
-        app.config.from_object(config.ConfigProd)
-
-    elif run_mode == 'test':
-        app.config.from_object(config.ConfigTest)
-
-    app.register_blueprint(routes.bp)
-
-    return app
+db.init_app(app)
+app.register_blueprint(routes.bp)

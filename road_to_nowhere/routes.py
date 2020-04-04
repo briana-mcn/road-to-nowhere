@@ -1,5 +1,6 @@
 import json
 import random
+import string
 
 from flask import Blueprint, request
 from tswift import Song
@@ -76,19 +77,38 @@ def build_song(parsed_song, artist):
 @bp.route('/random', methods=['GET'])
 def random_lyrics():
     lyrics = get_random_lyrics()
-    return lyrics, 200
+    return json.dumps(lyrics), 200
 
 
 def get_random_lyrics():
     song_count = db.session.query(SongModel).count()
-    random_choice = random.randint(0, song_count)
+    random_choice = random.randint(0, song_count - 1)
+    print(random_choice)
     song = db.session.query(SongModel)[random_choice]
     title = song.title
     artist = song.artist.name
     lyrics = song.lyrics.split('\n\n')
     db.session.close()
-    return json.dumps({
+    return {
         'title': title,
         'artist': artist,
         'lyrics': random.choice(lyrics)
-    })
+    }
+
+
+@bp.route('/delete-song', methods=['DELETE'])
+def delete_song():
+    req_json = request.get_json()
+    song_titled = string.capwords(req_json.get('song'))
+
+    song_obj = db.session.query(SongModel).filter(SongModel.title == song_titled)
+    song = song_obj.first()
+
+    if not song:
+        return json.dumps({"message": f"Failure: could not find '{song_titled}'"})
+    else:
+        formatted_song = repr(song)
+        song_obj.delete()
+        db.session.commit()
+        db.session.close()
+        return json.dumps({"message": f"Success: deleted: {formatted_song}"})

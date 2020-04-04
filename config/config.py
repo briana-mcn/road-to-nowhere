@@ -7,7 +7,7 @@ class Config:
 
 
 class ConfigDev(Config):
-    SQLALCHEMY_DATABASE_URI = 'mysql://dev:test@localhost:3306/road_to_nowhere'
+    SQLALCHEMY_DATABASE_URI = 'sqlite:////tmp/test.db'
 
 
 class ConfigTest(Config):

@@ -9,7 +9,7 @@ class ArtistModel(db.Model):
     songs = db.relationship('SongModel', back_populates='artist')
 
     def __repr__(self):
-        return f'<Artist {self.name}>'
+        return f'<Artist: {self.name}>'
 
 
 class SongModel(db.Model):
@@ -21,4 +21,4 @@ class SongModel(db.Model):
     artist = db.relationship('ArtistModel', back_populates='songs')
 
     def __repr__(self):
-        return f'<Song {self.title}, {self.artist}>'
+        return f'<Song: {self.title}, {self.artist}>'

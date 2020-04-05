@@ -37,6 +37,19 @@ def post_song():
     return json.dumps({'message': 'Success', 'artist': artist.name, 'song': song.title}), 200
 
 
+def get_totals():
+    song_count = db.session.query(SongModel).count()
+    artist_count = db.session.query(ArtistModel).count()
+
+    # db.session.query(SongModel)
+    # db.session.query(ArtistModel)
+    #
+    # db.session.commit()
+    # db.session.close()
+
+    return artist_count, song_count
+
+
 def query_objects(parsed_song):
     artist = db.session.query(ArtistModel).filter(ArtistModel.name == parsed_song.artist).first()
     song = db.session.query(SongModel).filter(
@@ -112,3 +125,14 @@ def delete_song():
         db.session.commit()
         db.session.close()
         return json.dumps({"message": f"Success: deleted: {formatted_song}"})
+
+
+@bp.route('/songs', methods=['GET'])
+def get_all_songs():
+    songs = db.session.query(SongModel).all()
+
+    results = []
+    for song in songs:
+        results.append(song.title)
+    print(results)
+    return json.dumps({'songs': results})

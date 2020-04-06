@@ -41,12 +41,6 @@ def get_totals():
     song_count = db.session.query(SongModel).count()
     artist_count = db.session.query(ArtistModel).count()
 
-    # db.session.query(SongModel)
-    # db.session.query(ArtistModel)
-    #
-    # db.session.commit()
-    # db.session.close()
-
     return artist_count, song_count
 
 

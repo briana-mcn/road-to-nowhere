@@ -1,6 +1,6 @@
 import json
 
-from flask import Blueprint, request
+from flask import Blueprint
 
 from road_to_nowhere import songs_and_artists
 from road_to_nowhere.exceptions import RoadToNowhereError

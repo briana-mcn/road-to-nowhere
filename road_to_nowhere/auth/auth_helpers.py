@@ -8,8 +8,12 @@ from road_to_nowhere.models import UserModel
 
 def get_user_data():
     body = request.get_json()
-    username = body.get('username')
-    password = body.get('password', '').encode()
+    username = None
+    password = None
+
+    if body:
+        username = body.get('username')
+        password = body.get('password', '').encode()
     return username, password
 
 

@@ -28,6 +28,8 @@ def retrieve_song(session, song_title, artist_id):
 def retrieve_artist_and_song(session, parsed_song):
     artist = retrieve_artist(session, parsed_song.artist)
     artist = artist.first()
+    if artist is None:
+        return None, None
     song = retrieve_song(session, parsed_song.title, artist.id)
     song = song.first()
 

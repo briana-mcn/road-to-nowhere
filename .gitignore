@@ -9,3 +9,5 @@
 *.py[cod]
 venv/*
 
+# local variables
+local_variables.sh

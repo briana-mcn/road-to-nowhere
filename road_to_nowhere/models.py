@@ -6,7 +6,6 @@ from cryptography.hazmat.primitives.kdf.scrypt import Scrypt
 from road_to_nowhere.database import db
 
 
-# nullable set to False means 'not null' added to the DDL
 class ArtistModel(db.Model):
     _tablename_ = 'artist_model'
     id = db.Column(db.Integer, primary_key=True)
@@ -73,3 +72,19 @@ class UserModel(db.Model):
             backend=backend
         )
         kdf.verify(password, self.password_hash)
+
+    # login manager required properties / functions
+    @property
+    def is_authenticated(self):
+        return True
+
+    @property
+    def is_active(self):
+        return True
+
+    @property
+    def is_anonymous(self):
+        return False
+
+    def get_id(self):
+        return self.id

@@ -1,5 +1,4 @@
 import random
-import string
 
 from tswift import Song
 
@@ -30,7 +29,7 @@ def retrieve_song(session, song_title, artist_id=None):
         ).first()
 
 
-def retrieve_song_and_artist(artist_name, song_title):
+def retrieve_song_and_lyrics(artist_name, song_title):
     session = db.session()
     artist = retrieve_artist(session, artist_name)
 
@@ -63,7 +62,7 @@ def create_song(artist_name, song_title):
     results = {'artist': artist.name, 'song': song.title, 'lyrics': song.lyrics}
 
     try:
-        db.session.commit()
+        session.commit()
     except Exception:
         session.rollback()
         raise
@@ -85,28 +84,37 @@ def get_all_songs():
     return {'songs': results}
 
 
-def delete_requested_song(artist, song):
+def delete_requested_song(artist_name, song_title):
     session = db.session()
 
-    artist_obj = retrieve_artist(session, artist)
-    artist_obj = artist_obj.first()
-    song_obj = retrieve_song(session, song, artist_obj.id)
+    artist = retrieve_artist(session, artist_name)
+    if artist is None:
+        raise DatabaseRoadToNowhereError(f'No artist found:  {artist_name}')
 
-    if not song_obj.first():
-        success = False
-    else:
-        song_obj.delete()
+    song = retrieve_song(session, song_title, artist.id)
+    if song is None:
+        raise DatabaseRoadToNowhereError(f'Song was not found: {song_title} by {artist_name}')
+
+    session.delete(song)
+
+    try:
         session.commit()
+    except Exception:
+        session.rollback()
+        raise
+    finally:
         session.close()
-        success = True
 
-    return success
+    return True
 
 
 def get_random_lyrics():
-    # 	<title>ValueError: empty range for randrange() (0, 0, 0) // Werkzeug Debugger</title>
     session = db.session()
     all_songs = retrieve_all_songs(session)
+
+    if not all_songs:
+        raise RoadToNowhereError('No songs found')
+
     song_count = len(all_songs)
     random_choice = random.randint(0, song_count - 1)
 

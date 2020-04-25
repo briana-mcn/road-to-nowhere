@@ -22,7 +22,7 @@ def song():
     }
     """
     try:
-        artist_name, song_title = validate_song_and_artist(request.get_json())
+        artist_name, song_title = validate_song_and_artist(request)
     except RequestValidationError as e:
         return json.dumps({"message": e.msg}), 400
 
@@ -52,7 +52,7 @@ def song():
 
     if request.method == 'GET':
         try:
-            results = songs_and_artists.retrieve_song_and_artist(artist_name, song_title)
+            results = songs_and_artists.retrieve_song_and_lyrics(artist_name, song_title)
         except DatabaseRoadToNowhereError as e:
             return json.dumps({"message": e.msg}), 400
         else:
@@ -61,8 +61,20 @@ def song():
 
 @bp.route('/random', methods=['GET'])
 def random_lyrics():
-    """Retrieves a random refrain from a song."""
-    return json.dumps(songs_and_artists.get_random_lyrics()), 200
+    """Retrieves a random refrain from a song.
+
+    Requires a song and artist string as the request body in the following format:
+    {
+        'song': str,
+        'artist': str
+    }
+    """
+    try:
+        song_data = songs_and_artists.get_random_lyrics()
+    except RoadToNowhereError as e:
+        return json.dumps({"message": "No songs found"})
+    else:
+        return json.dumps(song_data)
 
 
 @bp.route('/delete-song', methods=['DELETE'])
@@ -76,13 +88,17 @@ def delete_song():
         'artist': str
     }
     """
-    artist, song = get_requested_artist_and_song()
-    success = songs_and_artists.delete_requested_song(artist, song)
+    try:
+        artist_name, song_title = validate_song_and_artist(request)
+    except RequestValidationError as e:
+        return json.dumps({"message": e.msg}), 400
 
-    if not success:
-        return json.dumps({"message": f"Failure: could not find '{song}' by '{artist}'"}), 400
-    else:
-        return json.dumps({"message": f"Success: Deleted '{song}' by {artist}'"}), 200
+    try:
+        songs_and_artists.delete_requested_song(artist_name, song_title)
+    except DatabaseRoadToNowhereError as e:
+        return json.dumps({"message": e.msg}), 400
+
+    return json.dumps({"message": f"Success: Deleted '{song_title}' by {artist_name}'"}), 200
 
 
 @bp.route('/songs', methods=['GET'])

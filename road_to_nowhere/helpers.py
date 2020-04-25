@@ -2,8 +2,8 @@ import string
 from road_to_nowhere.exceptions import RequestValidationError
 
 
-def validate_song_and_artist(request_body):
-
+def validate_song_and_artist(request):
+    request_body = request.get_json()
     artist = request_body.get('artist')
     song = request_body.get('song')
 

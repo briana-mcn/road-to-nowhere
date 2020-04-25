@@ -1,12 +1,24 @@
 [[source]]
+
 name = "pypi"
 url = "https://pypi.org/simple"
 verify_ssl = true
 
+
 [dev-packages]
 
+ipython = "*"
+
+
 [packages]
+
 flask-sqlalchemy = "*"
+flask-login = "*"
+flask-migrate = "*"
+cryptography = "*"
+tswift = "*"
+
 
 [requires]
+
 python_version = "3.8"

@@ -31,7 +31,7 @@ def login():
     user = get_user(username)
 
     if user is None or password is None:
-        return {'message': 'Username and password is required to log in'}, 400
+        return {'message': 'Valid username and password is required to log in'}, 400
 
     try:
         user.verify_hash(password)

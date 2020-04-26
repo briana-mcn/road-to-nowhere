@@ -151,3 +151,11 @@ def build_song(session, song_title, song_lyrics, artist):
     song = SongModel(title=song_title, lyrics=song_lyrics, artist=artist)
     session.add(song)
     return song
+
+
+def get_all_artists():
+    artists = db.session.query(ArtistModel).all()
+    all_artists = []
+    for artist in artists:
+        all_artists.append(artist.name)
+    return {'artists': all_artists}

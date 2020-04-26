@@ -105,3 +105,9 @@ def delete_song():
 def get_all_songs():
     """Returns all songs written to the database."""
     return json.dumps(songs_and_artists.get_all_songs()), 200
+
+
+@bp.route('/artists', methods=['GET'])
+def get_all_artists():
+    """Returns all artists written to the database."""
+    return json.dumps(songs_and_artists.get_all_artists()), 200

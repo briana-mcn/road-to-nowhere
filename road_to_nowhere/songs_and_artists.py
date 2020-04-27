@@ -46,17 +46,17 @@ def retrieve_song_and_lyrics(artist_name, song_title):
 
 def create_song(artist_name, song_title):
     session = db.session()
+    song = None
 
-    song = retrieve_song(session, song_title)
+    artist = retrieve_artist(session, artist_name)
+    if artist:
+        song = retrieve_song(session, song_title, artist.id)
+
     if song:
         raise DatabaseRoadToNowhereError(f'Song already exists: {song.title} by {song.artist.name}')
 
     parsed_song = Song(title=song_title, artist=artist_name)
     validate_song(parsed_song)
-
-    artist = retrieve_artist(session, artist_name)
-    if not artist:
-        artist = build_artist(session, artist_name)
 
     song = build_song(session, song_title, parsed_song.lyrics, artist)
     results = {'artist': artist.name, 'song': song.title, 'lyrics': song.lyrics}

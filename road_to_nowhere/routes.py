@@ -43,7 +43,6 @@ def song():
         except DatabaseRoadToNowhereError as e:
             return json.dumps({"message": e.msg}), 200
 
-        # todo fix this when keyerror is caught in tswift library
         except TswiftError:
             return json.dumps({"message": "Unable to handle the artist and song combo"}), 500
 

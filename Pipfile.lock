@@ -56,11 +56,11 @@
         },
         "click": {
             "hashes": [],
-            "version": "==7.1.1"
+            "version": "==7.1.2"
         },
         "cryptography": {
             "hashes": [],
-            "version": "==2.9"
+            "version": "==2.9.2"
         },
         "enum34": {
             "hashes": [],
@@ -146,7 +146,7 @@
         },
         "tswift": {
             "hashes": [],
-            "version": "==0.6.0"
+            "version": "==0.7.0"
         },
         "urllib3": {
             "hashes": [],
@@ -177,7 +177,7 @@
         },
         "ipython": {
             "hashes": [],
-            "version": "==7.13.0"
+            "version": "==7.14.0"
         },
         "ipython-genutils": {
             "hashes": [],

@@ -2,6 +2,7 @@ import json
 
 from flask import Blueprint, request
 from flask_login import login_required
+from tswift import TswiftError
 
 from road_to_nowhere import songs_and_artists
 from road_to_nowhere.exceptions import DatabaseRoadToNowhereError, RequestValidationError, RoadToNowhereError
@@ -42,8 +43,7 @@ def song():
         except DatabaseRoadToNowhereError as e:
             return json.dumps({"message": e.msg}), 200
 
-        # todo fix this when keyerror is caught in tswift library
-        except KeyError:
+        except TswiftError:
             return json.dumps({"message": "Unable to handle the artist and song combo"}), 500
 
         else:

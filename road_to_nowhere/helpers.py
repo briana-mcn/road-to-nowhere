@@ -1,19 +1,33 @@
-import string
+from flask import request
+
 from road_to_nowhere.exceptions import RequestValidationError
 
 
-def validate_song_and_artist(request):
-    request_body = request.get_json()
-    artist = request_body.get('artist')
-    song = request_body.get('song')
+def get_request_model(request_model, expected_params=None):
+    result = {}
 
-    if not artist or not song:
-        raise RequestValidationError('Song or artist must be a provided or a valid string sequence')
+    if expected_params:
+        for param in expected_params:
+            if param not in request.args:
+                raise RequestValidationError('Expected params not provided')
+            result.update({param: request.args.get(param)})
 
-    artist = string.capwords(artist)
-    song = string.capwords(song)
+    return request_model(**result)
 
-    return artist, song
+
+def get_post_request_model(request_model, expected_keys=None):
+    result = {}
+
+    if expected_keys:
+        request_body = request.get_json()
+
+        for key in expected_keys:
+            if key not in request_body.keys():
+                raise RequestValidationError('Expected request keys not provided')
+            else:
+                result.update({key: request_body.get(key)})
+
+    return request_model(**result)
 
 
 def register_blueprints(flask_app, blueprints):

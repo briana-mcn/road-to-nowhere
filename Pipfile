@@ -17,6 +17,7 @@ flask-login = "*"
 flask-migrate = "*"
 cryptography = "*"
 tswift = "*"
+gunicorn = "*"
 
 
 [requires]

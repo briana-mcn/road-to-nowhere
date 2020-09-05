@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "0748150e7775dd081ff8916435c09c502f75b77e51e47f9e2e43860eab7e783f"
+            "sha256": "da37766d6d92fa187e9d38c03f4460dd418ce7782eafcdc16450d1ffb4bc9865"
         },
         "host-environment-markers": {
             "implementation_name": "cpython",
@@ -44,11 +44,11 @@
         },
         "certifi": {
             "hashes": [],
-            "version": "==2020.4.5.1"
+            "version": "==2020.6.20"
         },
         "cffi": {
             "hashes": [],
-            "version": "==1.14.0"
+            "version": "==1.14.2"
         },
         "chardet": {
             "hashes": [],
@@ -60,7 +60,7 @@
         },
         "cryptography": {
             "hashes": [],
-            "version": "==2.9.2"
+            "version": "==3.1"
         },
         "enum34": {
             "hashes": [],
@@ -81,15 +81,19 @@
         },
         "flask-sqlalchemy": {
             "hashes": [],
-            "version": "==2.4.1"
+            "version": "==2.4.4"
         },
         "google": {
             "hashes": [],
-            "version": "==2.0.3"
+            "version": "==3.0.0"
+        },
+        "gunicorn": {
+            "hashes": [],
+            "version": "==20.0.4"
         },
         "idna": {
             "hashes": [],
-            "version": "==2.9"
+            "version": "==2.10"
         },
         "ipaddress": {
             "hashes": [],
@@ -106,11 +110,11 @@
         },
         "lxml": {
             "hashes": [],
-            "version": "==4.5.0"
+            "version": "==4.5.2"
         },
         "mako": {
             "hashes": [],
-            "version": "==1.1.2"
+            "version": "==1.1.3"
         },
         "markupsafe": {
             "hashes": [],
@@ -130,11 +134,11 @@
         },
         "requests": {
             "hashes": [],
-            "version": "==2.23.0"
+            "version": "==2.24.0"
         },
         "six": {
             "hashes": [],
-            "version": "==1.14.0"
+            "version": "==1.15.0"
         },
         "soupsieve": {
             "hashes": [],
@@ -142,7 +146,7 @@
         },
         "sqlalchemy": {
             "hashes": [],
-            "version": "==1.3.17"
+            "version": "==1.3.19"
         },
         "tswift": {
             "hashes": [],
@@ -150,7 +154,7 @@
         },
         "urllib3": {
             "hashes": [],
-            "version": "==1.25.9"
+            "version": "==1.25.10"
         },
         "werkzeug": {
             "hashes": [],
@@ -164,20 +168,20 @@
         },
         "backcall": {
             "hashes": [],
-            "version": "==0.1.0"
+            "version": "==0.2.0"
+        },
+        "backports.functools-lru-cache": {
+            "hashes": [],
+            "markers": "python_version < '3.2'",
+            "version": "==1.6.1"
         },
         "decorator": {
             "hashes": [],
             "version": "==4.4.2"
         },
-        "enum34": {
-            "hashes": [],
-            "markers": "python_version == '2.7'",
-            "version": "==1.1.10"
-        },
         "ipython": {
             "hashes": [],
-            "version": "==7.14.0"
+            "version": "==7.18.1"
         },
         "ipython-genutils": {
             "hashes": [],
@@ -185,11 +189,11 @@
         },
         "jedi": {
             "hashes": [],
-            "version": "==0.17.0"
+            "version": "==0.17.2"
         },
         "parso": {
             "hashes": [],
-            "version": "==0.7.0"
+            "version": "==0.7.1"
         },
         "pathlib2": {
             "hashes": [],
@@ -206,7 +210,7 @@
         },
         "prompt-toolkit": {
             "hashes": [],
-            "version": "==3.0.5"
+            "version": "==3.0.7"
         },
         "ptyprocess": {
             "hashes": [],
@@ -223,15 +227,15 @@
         },
         "six": {
             "hashes": [],
-            "version": "==1.14.0"
+            "version": "==1.15.0"
         },
         "traitlets": {
             "hashes": [],
-            "version": "==4.3.3"
+            "version": "==5.0.3"
         },
         "wcwidth": {
             "hashes": [],
-            "version": "==0.1.9"
+            "version": "==0.2.5"
         }
     }
 }

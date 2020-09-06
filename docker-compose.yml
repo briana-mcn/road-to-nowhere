@@ -1,0 +1,16 @@
+version: "3.8"
+
+services:
+  road-to-nowhere-web:
+    container_name: road-to-nowhere-web
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: road-to-nowhere:1.0.0
+    env_file: road_to_nowhere.env
+    ports:
+      - 6000:6000
+    volumes:
+      - $HOME/projects/road-to-nowhere:/usr/local/src/app
+    entrypoint:
+      - docker_configs/run.sh

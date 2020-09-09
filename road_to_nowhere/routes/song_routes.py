@@ -62,7 +62,7 @@ def get_song():
 
 @bp.route('/random', methods=['GET'])
 def random_lyrics():
-    """Retrieves a random refrain from any song."""
+    """Retrieves random lyrics from any song."""
     try:
         song_data = SongHandler().get_random_lyrics()
     except RoadToNowhereError as e:

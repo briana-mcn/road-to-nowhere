@@ -1,7 +1,8 @@
 from flask import request
 from sqlalchemy.exc import SQLAlchemyError
 
-from road_to_nowhere import db
+from road_to_nowhere import login_manager
+from road_to_nowhere.database import db
 from road_to_nowhere.exceptions import DatabaseRoadToNowhereError
 from road_to_nowhere.models import UserModel
 
@@ -35,3 +36,8 @@ def add_user(username, password):
 def get_user(username):
     user = db.session.query(UserModel).filter(UserModel.username == username).first()
     return user
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return UserModel.query.get(int(user_id))

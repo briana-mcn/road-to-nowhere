@@ -9,8 +9,15 @@ services:
     image: road-to-nowhere:1.0.0
     env_file: road_to_nowhere.env
     ports:
-      - 6000:6000
+      - 5000:5000
     volumes:
       - $HOME/projects/road-to-nowhere:/usr/local/src/app
     entrypoint:
       - docker_configs/run.sh
+
+  road-to-nowhere-mysql:
+    container_name: road-to-nowhere-mysql
+    image: mysql:latest
+    env_file: road_to_nowhere.env
+    ports:
+      - 3306:3306

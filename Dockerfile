@@ -12,8 +12,6 @@ COPY . ${PROJECT_DIR}
 
 RUN pipenv install --system --deploy
 
-EXPOSE 6000
+EXPOSE 5000
 
-RUN ls
-
-CMD gunicorn -k gthread -c ./gunicorn_config.py 'road_to_nowhere:app'
+CMD gunicorn -c ./gunicorn_config.py 'road_to_nowhere:app'

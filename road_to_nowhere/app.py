@@ -20,6 +20,7 @@ def create_app():
     # login manager required configs
     login = LoginManager(app)
 
+    # takes user id from curent session and logs them in
     @login.user_loader
     def load_user(id):
         return UserModel.query.get(int(id))

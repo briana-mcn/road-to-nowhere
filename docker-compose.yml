@@ -26,3 +26,8 @@ services:
     env_file: road_to_nowhere.env
     ports:
       - 3306:3306
+    volumes:
+      - road-to-nowehere-db:/var/lib/mysql
+
+volumes:
+  road-to-nowehere-db:

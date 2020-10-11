@@ -14,6 +14,8 @@ COPY . ${ROAD_TO_NOWHERE_PROJECT_DIR}
 
 RUN pipenv install --system --deploy
 
+ENV PYTHONPATH=.
+
 EXPOSE 5000
 
 CMD gunicorn -c ./gunicorn_config.py 'road_to_nowhere:app'

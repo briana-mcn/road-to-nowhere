@@ -31,10 +31,10 @@ class SongModel(db.Model):
 class UserModel(db.Model):
     _tablename_ = 'user_model'
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String, unique=True, nullable=False)
+    username = db.Column(db.String(20), unique=True, nullable=False)
     password_hash = db.Column(db.String(256), nullable=False)
     salt = db.Column(db.String(256), nullable=False)
-    api_token = db.Column(db.String, unique=True)
+    api_token = db.Column(db.String(256), unique=True)
 
     def __init__(self, username=None, password=None, **kwargs):
         password_hash = None

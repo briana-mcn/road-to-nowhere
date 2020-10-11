@@ -23,11 +23,12 @@ services:
   road-to-nowhere-mysql:
     container_name: road-to-nowhere-mysql
     image: mysql:5.7
-    env_file: road_to_nowhere.env
+    restart: always
+    env_file: mysql.conf
     ports:
       - 3306:3306
     volumes:
       - road-to-nowehere-db:/var/lib/mysql
 
 volumes:
-  road-to-nowehere-db:
+  road-to-nowehere-db: {}

@@ -8,11 +8,11 @@ class Config:
 
 
 class ConfigDev(Config):
-    SQLALCHEMY_DATABASE_URI = 'sqlite:////tmp/test.db'
+    SQLALCHEMY_DATABASE_URI = os.getenv('SQLALCHEMY_DATABASE_URI')
 
 
 class ConfigTest(Config):
-    pass
+    TESTING = True
 
 
 class ConfigProd(Config):

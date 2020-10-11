@@ -11,3 +11,4 @@ venv/*
 
 # variables
 *.env
+mysql.conf

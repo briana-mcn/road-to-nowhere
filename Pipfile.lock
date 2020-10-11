@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "da37766d6d92fa187e9d38c03f4460dd418ce7782eafcdc16450d1ffb4bc9865"
+            "sha256": "1004e88cd5b4ceaec91ff648a7603e2c49d1d2c342457c302f531996bf5d0a7e"
         },
         "host-environment-markers": {
             "implementation_name": "cpython",
@@ -31,7 +31,7 @@
     "default": {
         "alembic": {
             "hashes": [],
-            "version": "==1.4.2"
+            "version": "==1.4.3"
         },
         "backports.functools-lru-cache": {
             "hashes": [],
@@ -40,7 +40,7 @@
         },
         "beautifulsoup4": {
             "hashes": [],
-            "version": "==4.9.1"
+            "version": "==4.9.3"
         },
         "certifi": {
             "hashes": [],
@@ -48,7 +48,7 @@
         },
         "cffi": {
             "hashes": [],
-            "version": "==1.14.2"
+            "version": "==1.14.3"
         },
         "chardet": {
             "hashes": [],
@@ -60,7 +60,7 @@
         },
         "cryptography": {
             "hashes": [],
-            "version": "==3.1"
+            "version": "==3.1.1"
         },
         "enum34": {
             "hashes": [],
@@ -77,7 +77,11 @@
         },
         "flask-migrate": {
             "hashes": [],
-            "version": "==2.5.3"
+            "version": "==2.5.2"
+        },
+        "flask-script": {
+            "hashes": [],
+            "version": "==2.0.6"
         },
         "flask-sqlalchemy": {
             "hashes": [],
@@ -124,6 +128,10 @@
             "hashes": [],
             "version": "==2.20"
         },
+        "pymysql": {
+            "hashes": [],
+            "version": "==0.10.1"
+        },
         "python-dateutil": {
             "hashes": [],
             "version": "==2.8.1"
@@ -142,6 +150,7 @@
         },
         "soupsieve": {
             "hashes": [],
+            "markers": "python_version < '3.0'",
             "version": "==1.9.6"
         },
         "sqlalchemy": {
@@ -218,7 +227,7 @@
         },
         "pygments": {
             "hashes": [],
-            "version": "==2.6.1"
+            "version": "==2.7.1"
         },
         "scandir": {
             "hashes": [],
@@ -231,7 +240,7 @@
         },
         "traitlets": {
             "hashes": [],
-            "version": "==5.0.3"
+            "version": "==5.0.4"
         },
         "wcwidth": {
             "hashes": [],

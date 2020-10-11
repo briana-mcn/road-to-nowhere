@@ -2,10 +2,15 @@ version: "3.8"
 
 services:
   road-to-nowhere-web:
+    depends_on:
+      - road-to-nowhere-mysql
     container_name: road-to-nowhere-web
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.road_to_nowhere_web
+      args:
+        - ROAD_TO_NOWHERE_PYTHON_VER
+        - ROAD_TO_NOWHERE_PROJECT_DIR
     image: road-to-nowhere:1.0.0
     env_file: road_to_nowhere.env
     ports:
@@ -17,7 +22,7 @@ services:
 
   road-to-nowhere-mysql:
     container_name: road-to-nowhere-mysql
-    image: mysql:latest
+    image: mysql:5.7
     env_file: road_to_nowhere.env
     ports:
       - 3306:3306

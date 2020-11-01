@@ -2,7 +2,6 @@ import os
 
 from flask import Flask
 from flask_login import LoginManager
-from flask_migrate import Migrate
 
 from config import config_settings
 from road_to_nowhere import routes

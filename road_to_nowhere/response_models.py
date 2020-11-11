@@ -4,8 +4,8 @@ from typing import List
 
 @dataclass
 class SongResponseModel:
-    title: str = None
     artist: str = None
+    title: str = None
     lyrics: str = None
 
     @property

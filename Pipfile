@@ -14,7 +14,7 @@ ipython = "*"
 
 flask-sqlalchemy = "*"
 flask-login = "*"
-cryptography = "*"
+cryptography = ">=3.2"
 tswift = "*"
 gunicorn = "*"
 pymysql = "*"

@@ -14,9 +14,12 @@ ipython = "*"
 
 flask-sqlalchemy = "*"
 flask-login = "*"
-flask-migrate = "*"
-cryptography = "*"
+cryptography = ">=3.2"
 tswift = "*"
+gunicorn = "*"
+pymysql = "*"
+flask-migrate = "==2.5.2"
+flask-script = "*"
 
 
 [requires]

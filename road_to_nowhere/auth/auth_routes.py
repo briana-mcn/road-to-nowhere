@@ -24,19 +24,19 @@ def register():
 
 @bp.route('/login', methods=['GET'])
 def login():
-    if current_user.is_authenticated:
-        return {'message': 'User is already logged in'}, 200
-
     username, password = get_user_data()
     user = get_user(username)
 
     if user is None or password is None:
-        return {'message': 'Valid username and password is required to log in'}, 400
+        return {'message': 'Invalid username and password or password. You may have to register'}, 400
 
     try:
         user.verify_hash(password)
     except InvalidKey:
         return {'message': 'Incorrect Username or password'}, 404
+
+    if current_user.is_authenticated:
+        return {'message': 'User is already logged in'}, 200
 
     login_user(user, remember=True)
     return {'message': 'Logged in'}, 200

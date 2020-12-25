@@ -92,7 +92,7 @@ def delete_song():
     except DatabaseRoadToNowhereError as e:
         return json.dumps({"message": e.msg}), 400
 
-    return json.dumps({"Deleted": result}), 200
+    return json.dumps({"deleted": result}), 200
 
 
 @bp.route('/songs', methods=['GET'])

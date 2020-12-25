@@ -1,7 +1,7 @@
 from flask import request
 from sqlalchemy.exc import SQLAlchemyError
 
-from road_to_nowhere import db
+from road_to_nowhere.database import db
 from road_to_nowhere.exceptions import DatabaseRoadToNowhereError
 from road_to_nowhere.models import UserModel
 

@@ -9,5 +9,6 @@
 *.py[cod]
 venv/*
 
-# local variables
-local_variables.sh
+# variables
+*.env
+mysql.conf

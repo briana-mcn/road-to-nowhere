@@ -2,7 +2,7 @@ import json
 
 from cryptography.exceptions import InvalidKey
 from flask import Blueprint
-from flask_login import current_user, login_user, logout_user
+from flask_login import current_user, login_user, login_required, logout_user
 
 from road_to_nowhere.auth.auth_helpers import add_user, get_user, get_user_data
 from road_to_nowhere.exceptions import DatabaseRoadToNowhereError
@@ -10,7 +10,9 @@ from road_to_nowhere.exceptions import DatabaseRoadToNowhereError
 bp = Blueprint('auth_manager', __name__)
 
 
-@bp.route('/register-user', methods=['POST'])
+@bp.route('/register-new-user', methods=['POST'])
+# only a logged in user should be able to register new users
+@login_required
 def register():
     username, password = get_user_data()
     if not username or not password:
@@ -43,6 +45,7 @@ def login():
 
 
 @bp.route('/logout', methods=['GET'])
+@login_required
 def logout():
     logout_user()
     return {'message': 'Logged out'}, 200

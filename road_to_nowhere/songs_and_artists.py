@@ -105,7 +105,7 @@ class SongHandler:
         if song is None:
             raise DatabaseRoadToNowhereError(f'No song found: {song_title} by {artist_name}')
 
-        return SongResponseModel(song.artist.name, song.title, song.lyrics).as_dict
+        return SongResponseModel(song.title, song.artist.name, song.lyrics).as_dict
 
     def get_all_songs(self):
         all_songs = self._retrieve_all_songs()

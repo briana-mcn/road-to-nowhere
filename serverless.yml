@@ -8,12 +8,12 @@ resources:
   Resources:
     AuroraRDSCluster:
       Type: AWS::RDS::DBCluster
-      DatabaseName: "Road to Nowhere Database"
-      DBClusterIdentifier: road-to-nowhere-db
-      Engine: aurora
-      EngineMode: serverless
-      EngineVersion: "5.6.10a"
       Properties:
+        DatabaseName: "Road to Nowhere Database"
+        DBClusterIdentifier: road-to-nowhere-db
+        Engine: aurora
+        EngineMode: serverless
+        EngineVersion: "5.6.10a"
         MasterUsername: ${ssm:/road-to-nowhere-username}
         MasterUserPassword: ${ssm:/road-to-nowhere-password}
         DBSubnetGroupName:
@@ -27,5 +27,5 @@ resources:
         EnableHttpEndpoint: false
         StorageEncrypted: true
         VpcSecurityGroupIds:
-          - Ref: "RoadtoNowhereSecurityGroup"
+        - Ref: "RoadtoNowhereSecurityGroup"
         DeletionProtection: true

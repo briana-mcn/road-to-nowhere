@@ -1,4 +1,5 @@
 service: road-to-nowhere
+variablesResolutionMode: 20210326
 
 provider:
   name: aws
@@ -14,10 +15,10 @@ resources:
         Engine: aurora
         EngineMode: serverless
         EngineVersion: "5.6.10a"
-        MasterUsername: ${ssm:/road-to-nowhere-username}
-        MasterUserPassword: ${ssm:/road-to-nowhere-password}
+        MasterUsername: ${ssm:road-to-nowhere-username}
+        MasterUserPassword: ${ssm:road-to-nowhere-password}
         DBSubnetGroupName:
-          Ref: "roadtonowhererdssubnetgroup"
+          Ref: RoadtoNowhereSubnetGroup
         ScalingConfiguration:
           AutoPause: true
           MinCapacity: 1
@@ -27,5 +28,73 @@ resources:
         EnableHttpEndpoint: false
         StorageEncrypted: true
         VpcSecurityGroupIds:
-        - Ref: "RoadtoNowhereSecurityGroup"
+        - Ref: RoadtoNowhereSecurityGroup
         DeletionProtection: true
+    RoadtoNowhereVPC:
+      Type: AWS::EC2::VPC
+      Properties:
+        CidrBlock: 10.0.0.0/16
+        EnableDnsSupport: true
+        EnableDnsHostnames: false
+        InstanceTenancy: default
+        Tags:
+          - Key: "Name"
+            Value: "road-to-nowhere-vpc"
+    RoadtoNowhereSecurityGroup:
+      DependsOn: RoadtoNowhereVPC
+      Type: AWS::EC2::SecurityGroup
+      Properties:
+        GroupName: RoadtoNowhereSecurityGroup
+        GroupDescription: SQL Traffic
+        VpcId:
+          Ref: RoadtoNowhereVPC
+        SecurityGroupIngress:
+          - IpProtocol: tcp
+            FromPort: '0'
+            ToPort: '3306'
+            CidrIp: "0.0.0.0/24"
+    RoadtoNowhereSubnetA:
+      DependsOn: RoadtoNowhereVPC
+      Type: AWS::EC2::Subnet
+      Properties:
+        VpcId:
+          Ref: RoadtoNowhereVPC
+        AvailabilityZone: us-east-2a
+        CidrBlock: 10.0.1.0/24
+        Tags:
+          -
+            Key: "Name"
+            Value: "RoadtoNowhereSubnetA"
+    RoadtoNowhereSubnetB:
+      DependsOn: RoadtoNowhereVPC
+      Type: AWS::EC2::Subnet
+      Properties:
+        VpcId:
+          Ref: RoadtoNowhereVPC
+        AvailabilityZone: us-east-2b
+        CidrBlock: 10.0.0.0/24
+        Tags:
+          - Key: "Name"
+            Value: "RoadtoNowhereSubnetB"
+    RoadtoNowhereSubnetC:
+      DependsOn: RoadtoNowhereVPC
+      Type: AWS::EC2::Subnet
+      Properties:
+        VpcId:
+          Ref: RoadtoNowhereVPC
+        AvailabilityZone: us-east-2c
+        CidrBlock: 10.0.2.0/24
+        Tags:
+          - Key: "Name"
+            Value: "RoadtoNowhereSubnetC"
+    RoadtoNowhereSubnetGroup:
+      Type: AWS::RDS::DBSubnetGroup
+      Properties:
+        DBSubnetGroupDescription: "Subnet group for road to nowhere db"
+        SubnetIds:
+          - Ref: RoadtoNowhereSubnetA
+          - Ref: RoadtoNowhereSubnetB
+          - Ref: RoadtoNowhereSubnetC
+        Tags:
+          - Key: "Name"
+            Value: "RoadtoNowhereSubnetGroup"

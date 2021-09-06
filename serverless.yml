@@ -10,11 +10,11 @@ resources:
     AuroraRDSCluster:
       Type: AWS::RDS::DBCluster
       Properties:
-        DatabaseName: "Road to Nowhere Database"
+        DatabaseName: RoadtoNowhereDatabase
         DBClusterIdentifier: road-to-nowhere-db
         Engine: aurora
         EngineMode: serverless
-        EngineVersion: "5.6.10a"
+        EngineVersion: 5.6.10a
         MasterUsername: ${ssm:road-to-nowhere-username}
         MasterUserPassword: ${ssm:road-to-nowhere-password}
         DBSubnetGroupName:
@@ -23,7 +23,7 @@ resources:
           AutoPause: true
           MinCapacity: 1
           MaxCapacity: 64
-          SecondsUntilAutoPause: 180
+          SecondsUntilAutoPause: 300
         BackupRetentionPeriod: 3
         EnableHttpEndpoint: false
         StorageEncrypted: true

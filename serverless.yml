@@ -98,3 +98,7 @@ resources:
         Tags:
           - Key: "Name"
             Value: "RoadtoNowhereSubnetGroup"
+    RoadtoNowhereEcrRepository:
+      Type: AWS::ECR::Repository
+      Properties:
+        RepositoryName: road-to-nowhere/service

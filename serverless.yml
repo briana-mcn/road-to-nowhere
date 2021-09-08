@@ -102,3 +102,9 @@ resources:
       Type: AWS::ECR::Repository
       Properties:
         RepositoryName: road-to-nowhere/service
+    RoadtoNowhereEcsCluster:
+      Type: AWS::ECS::Cluster
+      Properties:
+        CapacityProviders:
+          - FARGATE
+        ClusterName: road-to-nowhere-fargate-cluster

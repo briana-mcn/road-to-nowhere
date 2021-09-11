@@ -7,6 +7,21 @@ provider:
 
 resources:
   Resources:
+    EcsAssumeRole:
+      Type: AWS::IAM::Role
+      Properties:
+        ManagedPolicyArns:
+          - arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy
+        RoleName: ecsTaskExecutionRole
+        AssumeRolePolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Principal:
+                Service:
+                  - ecs-tasks.amazonaws.com
+              Action:
+                - sts:AssumeRole
     AuroraRDSCluster:
       Type: AWS::RDS::DBCluster
       Properties:

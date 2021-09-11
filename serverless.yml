@@ -108,3 +108,8 @@ resources:
         CapacityProviders:
           - FARGATE
         ClusterName: road-to-nowhere-fargate-cluster
+    RoadtoNowhereLogGroup:
+      Type: AWS::Logs::LogGroup
+      Properties:
+        LogGroupName: road-to-nowhere-logs
+        RetentionInDays: 60

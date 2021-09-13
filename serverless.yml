@@ -79,8 +79,8 @@ resources:
         EnableDnsHostnames: false
         InstanceTenancy: default
         Tags:
-          - Key: "Name"
-            Value: "road-to-nowhere-vpc"
+          - Key: 'Name'
+            Value: 'road-to-nowhere-vpc'
     RoadtoNowhereSecurityGroup:
       DependsOn: RoadtoNowhereVPC
       Type: AWS::EC2::SecurityGroup
@@ -93,7 +93,7 @@ resources:
           - IpProtocol: tcp
             FromPort: '0'
             ToPort: '3306'
-            CidrIp: "0.0.0.0/24"
+            CidrIp: '0.0.0.0/24'
     RoadtoNowhereSubnetA:
       DependsOn: RoadtoNowhereVPC
       Type: AWS::EC2::Subnet
@@ -104,8 +104,8 @@ resources:
         CidrBlock: 10.0.1.0/24
         Tags:
           -
-            Key: "Name"
-            Value: "RoadtoNowhereSubnetA"
+            Key: 'Name'
+            Value: 'RoadtoNowhereSubnetA'
     RoadtoNowhereSubnetB:
       DependsOn: RoadtoNowhereVPC
       Type: AWS::EC2::Subnet
@@ -115,8 +115,8 @@ resources:
         AvailabilityZone: us-east-2b
         CidrBlock: 10.0.0.0/24
         Tags:
-          - Key: "Name"
-            Value: "RoadtoNowhereSubnetB"
+          - Key: 'Name'
+            Value: 'RoadtoNowhereSubnetB'
     RoadtoNowhereSubnetC:
       DependsOn: RoadtoNowhereVPC
       Type: AWS::EC2::Subnet
@@ -126,19 +126,19 @@ resources:
         AvailabilityZone: us-east-2c
         CidrBlock: 10.0.2.0/24
         Tags:
-          - Key: "Name"
-            Value: "RoadtoNowhereSubnetC"
+          - Key: 'Name'
+            Value: 'RoadtoNowhereSubnetC'
     RoadtoNowhereSubnetGroup:
       Type: AWS::RDS::DBSubnetGroup
       Properties:
-        DBSubnetGroupDescription: "Subnet group for road to nowhere db"
+        DBSubnetGroupDescription: 'Subnet group for road to nowhere db'
         SubnetIds:
           - Ref: RoadtoNowhereSubnetA
           - Ref: RoadtoNowhereSubnetB
           - Ref: RoadtoNowhereSubnetC
         Tags:
-          - Key: "Name"
-            Value: "RoadtoNowhereSubnetGroup"
+          - Key: 'Name'
+            Value: 'RoadtoNowhereSubnetGroup'
     RoadtoNowhereEcrRepository:
       Type: AWS::ECR::Repository
       Properties:

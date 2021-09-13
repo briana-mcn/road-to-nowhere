@@ -7,12 +7,12 @@ provider:
 
 resources:
   Resources:
-    EcsAssumeRole:
+    EcsExecutionRole:
       Type: AWS::IAM::Role
       Properties:
         ManagedPolicyArns:
           - arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy
-        RoleName: ecsTaskExecutionRole
+        RoleName: ecsExecutionRole
         AssumeRolePolicyDocument:
           Version: '2012-10-17'
           Statement:

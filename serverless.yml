@@ -35,8 +35,8 @@ resources:
                   - ecs-tasks.amazonaws.com
               Action:
                 - sts:AssumeRole
-          Policies:
-            PolicyName:
+        Policies:
+          - PolicyName: AmazonECSTaskRdsAuroraPolicy
             PolicyDocument:
               Version: '2012-10-17'
               Statement:
@@ -47,7 +47,10 @@ resources:
                     - 'rds:DownloadDBLogFilePortion'
                     - 'rds:DownloadCompleteDBLogFile'
                   Resource:
-                    - Ref: AuroraRDSCluster
+                    Fn::Join:
+                      - ''
+                      - - 'arn:aws:rds:::cluster/'
+                        - Ref: AuroraRDSCluster
     AuroraRDSCluster:
       Type: AWS::RDS::DBCluster
       Properties:

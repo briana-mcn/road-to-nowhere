@@ -22,6 +22,32 @@ resources:
                   - ecs-tasks.amazonaws.com
               Action:
                 - sts:AssumeRole
+    EcsTaskRole:
+      Type: AWS::IAM::Role
+      Properties:
+        RoleName: ecsTaskRole
+        AssumeRolePolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Principal:
+                Service:
+                  - ecs-tasks.amazonaws.com
+              Action:
+                - sts:AssumeRole
+          Policies:
+            PolicyName:
+            PolicyDocument:
+              Version: '2012-10-17'
+              Statement:
+                - Effect: Allow
+                  Action:
+                    - 'rds:ModifyDBCluster'
+                    - 'rds:ListTagsForResource'
+                    - 'rds:DownloadDBLogFilePortion'
+                    - 'rds:DownloadCompleteDBLogFile'
+                  Resource:
+                    - Ref: AuroraRDSCluster
     AuroraRDSCluster:
       Type: AWS::RDS::DBCluster
       Properties:

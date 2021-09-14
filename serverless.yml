@@ -178,7 +178,8 @@ resources:
                   awslogs-group:
                     Ref: RoadtoNowhereLogGroup
                   awslogs-stream-prefix: awslogs-roadtonowhere-service
-                  awslogs-region: ${AWS::Region}
+                  awslogs-region:
+                    Fn::Sub: ${AWS::Region}
               Essential: ${strToBool(true)}
         Cpu: 256
         Memory: 512

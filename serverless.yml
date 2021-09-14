@@ -5,8 +5,57 @@ provider:
   name: aws
   region: us-east-2
 
+custom:
+    ImageVersion: 1.0.0
+    ImageName: road-to-nowhere
+
+
 resources:
   Resources:
+    EcsExecutionRole:
+      Type: AWS::IAM::Role
+      Properties:
+        ManagedPolicyArns:
+          - arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy
+        RoleName: ecsExecutionRole
+        AssumeRolePolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Principal:
+                Service:
+                  - ecs-tasks.amazonaws.com
+              Action:
+                - sts:AssumeRole
+    EcsTaskRole:
+      Type: AWS::IAM::Role
+      Properties:
+        RoleName: ecsTaskRole
+        AssumeRolePolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Principal:
+                Service:
+                  - ecs-tasks.amazonaws.com
+              Action:
+                - sts:AssumeRole
+        Policies:
+          - PolicyName: AmazonECSTaskRdsAuroraPolicy
+            PolicyDocument:
+              Version: '2012-10-17'
+              Statement:
+                - Effect: Allow
+                  Action:
+                    - 'rds:ModifyDBCluster'
+                    - 'rds:ListTagsForResource'
+                    - 'rds:DownloadDBLogFilePortion'
+                    - 'rds:DownloadCompleteDBLogFile'
+                  Resource:
+                    Fn::Join:
+                      - ''
+                      - - 'arn:aws:rds:::cluster/'
+                        - Ref: AuroraRDSCluster
     AuroraRDSCluster:
       Type: AWS::RDS::DBCluster
       Properties:
@@ -38,8 +87,8 @@ resources:
         EnableDnsHostnames: false
         InstanceTenancy: default
         Tags:
-          - Key: "Name"
-            Value: "road-to-nowhere-vpc"
+          - Key: 'Name'
+            Value: 'road-to-nowhere-vpc'
     RoadtoNowhereSecurityGroup:
       DependsOn: RoadtoNowhereVPC
       Type: AWS::EC2::SecurityGroup
@@ -52,7 +101,7 @@ resources:
           - IpProtocol: tcp
             FromPort: '0'
             ToPort: '3306'
-            CidrIp: "0.0.0.0/24"
+            CidrIp: '0.0.0.0/24'
     RoadtoNowhereSubnetA:
       DependsOn: RoadtoNowhereVPC
       Type: AWS::EC2::Subnet
@@ -63,8 +112,8 @@ resources:
         CidrBlock: 10.0.1.0/24
         Tags:
           -
-            Key: "Name"
-            Value: "RoadtoNowhereSubnetA"
+            Key: 'Name'
+            Value: 'RoadtoNowhereSubnetA'
     RoadtoNowhereSubnetB:
       DependsOn: RoadtoNowhereVPC
       Type: AWS::EC2::Subnet
@@ -74,8 +123,8 @@ resources:
         AvailabilityZone: us-east-2b
         CidrBlock: 10.0.0.0/24
         Tags:
-          - Key: "Name"
-            Value: "RoadtoNowhereSubnetB"
+          - Key: 'Name'
+            Value: 'RoadtoNowhereSubnetB'
     RoadtoNowhereSubnetC:
       DependsOn: RoadtoNowhereVPC
       Type: AWS::EC2::Subnet
@@ -85,19 +134,19 @@ resources:
         AvailabilityZone: us-east-2c
         CidrBlock: 10.0.2.0/24
         Tags:
-          - Key: "Name"
-            Value: "RoadtoNowhereSubnetC"
+          - Key: 'Name'
+            Value: 'RoadtoNowhereSubnetC'
     RoadtoNowhereSubnetGroup:
       Type: AWS::RDS::DBSubnetGroup
       Properties:
-        DBSubnetGroupDescription: "Subnet group for road to nowhere db"
+        DBSubnetGroupDescription: 'Subnet group for road to nowhere db'
         SubnetIds:
           - Ref: RoadtoNowhereSubnetA
           - Ref: RoadtoNowhereSubnetB
           - Ref: RoadtoNowhereSubnetC
         Tags:
-          - Key: "Name"
-            Value: "RoadtoNowhereSubnetGroup"
+          - Key: 'Name'
+            Value: 'RoadtoNowhereSubnetGroup'
     RoadtoNowhereEcrRepository:
       Type: AWS::ECR::Repository
       Properties:
@@ -113,3 +162,31 @@ resources:
       Properties:
         LogGroupName: road-to-nowhere-logs
         RetentionInDays: 60
+    RoadtoNowhereEcsTaskDefinition:
+      Type: AWS::ECS::TaskDefinition
+      Properties:
+        ContainerDefinitions:
+            - Name: RoadToNowhere-Service
+              Image:
+                Fn::Sub: '${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/${self:custom.ImageName}/service:${self:custom.ImageVersion}'
+              PortMappings:
+                - ContainerPort: 8080
+                  Protocol: http
+              LogConfiguration:
+                LogDriver: awslogs
+                Options:
+                  awslogs-group:
+                    Ref: RoadtoNowhereLogGroup
+                  awslogs-stream-prefix: awslogs-roadtonowhere-service
+                  awslogs-region: ${AWS::Region}
+              Essential: ${strToBool(true)}
+        Cpu: 256
+        Memory: 512
+        NetworkMode: awsvpc
+        RequiresCompatibilities:
+          - FARGATE
+        Family: roadtonowhere
+        ExecutionRoleArn:
+          Ref: EcsExecutionRole
+        TaskRoleArn:
+          Ref: EcsTaskRole

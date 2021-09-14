@@ -5,6 +5,11 @@ provider:
   name: aws
   region: us-east-2
 
+custom:
+    ImageVersion: 1.0.0
+    ImageName: road-to-nowhere
+
+
 resources:
   Resources:
     EcsExecutionRole:
@@ -157,3 +162,31 @@ resources:
       Properties:
         LogGroupName: road-to-nowhere-logs
         RetentionInDays: 60
+    RoadtoNowhereEcsTaskDefinition:
+      Type: AWS::ECS::TaskDefinition
+      Properties:
+        ContainerDefinitions:
+            - Name: RoadToNowhere-Service
+              Image:
+                Fn::Sub: '${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/${self:custom.ImageName}/service:${self:custom.ImageVersion}'
+              PortMappings:
+                - ContainerPort: 8080
+                  Protocol: http
+              LogConfiguration:
+                LogDriver: awslogs
+                Options:
+                  awslogs-group:
+                    Ref: RoadtoNowhereLogGroup
+                  awslogs-stream-prefix: awslogs-roadtonowhere-service
+                  awslogs-region: ${AWS::Region}
+              Essential: ${strToBool(true)}
+        Cpu: 256
+        Memory: 512
+        NetworkMode: awsvpc
+        RequiresCompatibilities:
+          - FARGATE
+        Family: roadtonowhere
+        ExecutionRoleArn:
+          Ref: EcsExecutionRole
+        TaskRoleArn:
+          Ref: EcsTaskRole

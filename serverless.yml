@@ -147,6 +147,28 @@ resources:
         Tags:
           - Key: 'Name'
             Value: 'RoadtoNowhereSubnetGroup'
+    RoadtoNowhereSubnetNLBA:
+      DependsOn: RoadtoNowhereVPC
+      Type: AWS::EC2::Subnet
+      Properties:
+        VpcId:
+          Ref: RoadtoNowhereVPC
+        AvailabilityZone: us-east-2a
+        CidrBlock: 10.0.4.0/24
+        Tags:
+          - Key: 'Name'
+            Value: 'RoadtoNowhereSubnetLB-A'
+    RoadtoNowhereSubnetNLBB:
+      DependsOn: RoadtoNowhereVPC
+      Type: AWS::EC2::Subnet
+      Properties:
+        VpcId:
+          Ref: RoadtoNowhereVPC
+        AvailabilityZone: us-east-2b
+        CidrBlock: 10.0.5.0/24
+        Tags:
+          - Key: 'Name'
+            Value: 'RoadtoNowhereSubnetLB-B'
     RoadtoNowhereEcrRepository:
       Type: AWS::ECR::Repository
       Properties:
@@ -191,3 +213,13 @@ resources:
           Ref: EcsExecutionRole
         TaskRoleArn:
           Ref: EcsTaskRole
+    RoadToNowhereNetworkLoadBalancer:
+      Type: AWS::ElasticLoadBalancingV2::LoadBalancer
+      Properties:
+        Name: roadtonowhere-nlb
+        Type: network
+        IpAddressType: ipv4
+        Scheme: internet-facing
+        Subnets:
+          - Ref: RoadtoNowhereSubnetNLBA
+          - Ref: RoadtoNowhereSubnetNLBB

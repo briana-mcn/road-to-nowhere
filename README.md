@@ -1,5 +1,15 @@
 # Road to Nowhere
 
+## Run docker compose Locally
+
+```bash
+cd road-to-nowhere
+docker-compose build
+docker-compose up -d # start container(s) at daemon
+docker logs -f <container name>
+curl localhost:5000/random
+```
+
 ## Run migrations
 
 Currently executed in the local docker container when updating the models

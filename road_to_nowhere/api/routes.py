@@ -7,12 +7,12 @@ from tswift import TswiftError
 from road_to_nowhere import request_models
 from road_to_nowhere.exceptions import DatabaseRoadToNowhereError, RequestValidationError, RoadToNowhereError
 from road_to_nowhere.helpers import get_request_model, get_post_request_model
-from road_to_nowhere.songs_and_artists import SongHandler, SongWriter
+from road_to_nowhere.api.songs_and_artists import SongHandler, SongWriter
 
-bp = Blueprint('song_builder', __name__)
+api_bp = Blueprint('song_builder', __name__)
 
 
-@bp.route('/song', methods=['POST'])
+@api_bp.route('/song', methods=['POST'])
 @login_required
 def post_song():
     """Creates song and artist if the request is valid.
@@ -39,7 +39,7 @@ def post_song():
         return results, 201
 
 
-@bp.route('/song', methods=['GET'])
+@api_bp.route('/song', methods=['GET'])
 def get_song():
     """Retrieves a song and artist if they are valid requests.
 
@@ -60,7 +60,7 @@ def get_song():
         return result, 200
 
 
-@bp.route('/random', methods=['GET'])
+@api_bp.route('/random', methods=['GET'])
 def random_lyrics():
     """Retrieves a random refrain from any song."""
     try:
@@ -71,7 +71,7 @@ def random_lyrics():
         return json.dumps(song_data)
 
 
-@bp.route('/delete-song', methods=['DELETE'])
+@api_bp.route('/delete-song', methods=['DELETE'])
 @login_required
 def delete_song():
     """Deletes only a song if the song and artist combo exist.
@@ -95,13 +95,13 @@ def delete_song():
     return json.dumps({"deleted": result}), 200
 
 
-@bp.route('/songs', methods=['GET'])
+@api_bp.route('/songs', methods=['GET'])
 def get_all_songs():
     """Returns all songs written to the database."""
     return json.dumps(SongHandler().get_all_songs()), 200
 
 
-@bp.route('/artists', methods=['GET'])
+@api_bp.route('/artists', methods=['GET'])
 def get_all_artists():
     """Returns all artists written to the database."""
     return json.dumps(SongHandler().get_all_artists()), 200

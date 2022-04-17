@@ -18,4 +18,4 @@ ENV PYTHONPATH=.
 
 EXPOSE 5000
 
-CMD gunicorn --reload --config=./gunicorn_config.py 'road_to_nowhere.app:create_app()'
+CMD gunicorn --config=./gunicorn_config.py 'road_to_nowhere.app:create_app()'

@@ -11,7 +11,7 @@ services:
       args:
         - ROAD_TO_NOWHERE_PYTHON_VER
         - ROAD_TO_NOWHERE_PROJECT_DIR
-    image: road-to-nowhere:1.0.0
+    image: road-to-nowhere:1.1.0
     env_file: road_to_nowhere.env
     ports:
       - 5000:5000

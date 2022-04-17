@@ -7,19 +7,21 @@ verify_ssl = true
 
 [dev-packages]
 
-ipython = "*"
+ipython = ">=7.31.1"
 
 
 [packages]
 
 flask-sqlalchemy = "*"
 flask-login = "*"
-cryptography = ">=3.2"
+cryptography = ">=3.3.2"
 tswift = "*"
 gunicorn = "*"
 pymysql = "*"
 flask-migrate = "==2.5.2"
 flask-script = "*"
+lxml = ">=4.6.5"
+urllib3= ">=1.26.5"
 
 
 [requires]
